@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battleship</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>BATTLESHIP</h1>
+    <p class="subtitle">Sink the enemy fleet before they sink yours</p>
+  </header>
+
+  <section class="panel info">
+    <div class="info-item">
+      <span class="label">Turn</span>
+      <span id="turn" class="value">Setup</span>
+    </div>
+    <div id="status" class="status">Randomize your fleet, then press Start Battle.</div>
+    <div class="controls">
+      <button id="randomize-btn">Randomize Fleet</button>
+      <button id="start-btn" class="primary">Start Battle</button>
+      <button id="new-game-btn">New Game</button>
+    </div>
+  </section>
+
+  <main class="boards">
+    <section class="panel board-panel">
+      <div class="board-header">
+        <h2>Player's Fleet</h2>
+        <span class="ships-left">Ships left: <strong id="player-ships-left">5</strong></span>
+      </div>
+      <div id="player-board" class="board"></div>
+      <ul id="player-fleet" class="fleet-list"></ul>
+    </section>
+
+    <section class="panel board-panel">
+      <div class="board-header">
+        <h2>Enemy Waters</h2>
+        <span class="ships-left">Ships left: <strong id="enemy-ships-left">5</strong></span>
+      </div>
+      <div id="enemy-board" class="board enemy"></div>
+      <ul id="enemy-fleet" class="fleet-list"></ul>
+    </section>
+  </main>
+
+  <div id="overlay" class="overlay hidden">
+    <div class="panel modal">
+      <h2 id="result-title">Victory!</h2>
+      <p id="result-text"></p>
+      <button id="play-again-btn" class="primary">New Game</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

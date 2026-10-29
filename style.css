@@ -1,0 +1,155 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a1628;
+  --panel: #12233d;
+  --panel-border: #1f3a5f;
+  --water: #1b4f72;
+  --water-hover: #2471a3;
+  --ship: #8a9bb0;
+  --hit: #e74c3c;
+  --miss: #d6eaf8;
+  --sunk: #7b241c;
+  --text: #e8f1fa;
+  --muted: #8fa9c4;
+  --accent: #3498db;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at top, #10284a 0%, var(--bg) 70%);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 24px 16px 40px;
+}
+
+header { text-align: center; margin-bottom: 20px; }
+h1 { font-size: 2.6rem; letter-spacing: 0.35em; font-weight: 800; color: #fff; }
+.subtitle { color: var(--muted); margin-top: 6px; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Info bar */
+.info {
+  max-width: 960px;
+  margin: 0 auto 20px;
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.info-item { display: flex; flex-direction: column; min-width: 90px; }
+.label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.value { font-size: 1.15rem; font-weight: 700; }
+.status { flex: 1; min-width: 220px; text-align: center; font-size: 1rem; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: #1a3150;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+button:hover:not(:disabled) { background: #24426b; }
+button:active:not(:disabled) { transform: translateY(1px); }
+button.primary { background: var(--accent); border-color: var(--accent); }
+button.primary:hover:not(:disabled) { background: #2e86c1; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Boards */
+.boards {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.board-panel { padding: 18px; width: 100%; max-width: 440px; }
+.board-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.board-header h2 { font-size: 1.15rem; }
+.ships-left { color: var(--muted); font-size: 0.9rem; }
+.ships-left strong { color: var(--text); }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.cell {
+  background: var(--water);
+  border-radius: 4px;
+  position: relative;
+  transition: background 0.12s;
+}
+.cell.ship { background: var(--ship); }
+.cell.hit { background: var(--hit); }
+.cell.sunk { background: var(--sunk); }
+
+/* Miss marker: light dot */
+.cell.miss::after {
+  content: "";
+  position: absolute;
+  inset: 35%;
+  border-radius: 50%;
+  background: var(--miss);
+}
+/* Hit marker: white center dot on red */
+.cell.hit::after, .cell.sunk::after {
+  content: "";
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.board.enemy.active .cell:not(.hit):not(.miss):not(.sunk) { cursor: crosshair; }
+.board.enemy.active .cell:not(.hit):not(.miss):not(.sunk):hover { background: var(--water-hover); }
+
+/* Fleet lists */
+.fleet-list { list-style: none; margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+.fleet-list li {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #1a3150;
+  color: var(--muted);
+}
+.fleet-list li.sunk { text-decoration: line-through; background: #3b1a1a; color: #e6a49c; }
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 12, 24, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.overlay.hidden { display: none; }
+.modal { padding: 32px 40px; text-align: center; max-width: 380px; }
+.modal h2 { font-size: 2rem; margin-bottom: 10px; }
+.modal p { color: var(--muted); margin-bottom: 20px; }
+.modal.win h2 { color: #58d68d; }
+.modal.lose h2 { color: var(--hit); }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.8rem; letter-spacing: 0.2em; }
+  .info { flex-direction: column; text-align: center; }
+  .controls { justify-content: center; }
+  .board { gap: 2px; }
+}
